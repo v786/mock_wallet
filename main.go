@@ -2,16 +2,23 @@ package main
 
 import (
 	"bufio"
+	"customer"
 	"fmt"
-	user "mock_wallet/user"
 	"os"
 	"strings"
 )
 
-var userList []user.User
+var customerList []customer.Customer
 
 func main() {
 	reader := bufio.NewReader(os.Stdin)
+	fmt.Println(`------------Welcome--------------
+		Main Menu:
+		1 Name Amount
+		2 List all customers with balance
+		3 List all Merchants
+		4 Update balance - Serial-number Amount
+		5 Print Menu`)
 	for {
 		fmt.Print("$ ")
 		cmdString, err := reader.ReadString('\n')
@@ -31,12 +38,25 @@ func runCommand(commandStr string) error {
 	case "exit":
 		os.Exit(0)
 		// add another case here for custom commands.
-	case "user":
-		fmt.Println("Creating User")
-		var userNew user.User
-		userNew.Create(arrCommandStr[1], 100)
-		userNew.GetDetails()
+	case "1":
+		addCustomer(arrCommandStr[1])
+		return nil
+	case "2":
+		getCustomers()
 	}
 
 	return nil
+}
+
+func getCustomers() {
+	for i := range customerList {
+		fmt.Println(i, customerList[i].GetDetails())
+	}
+}
+
+func addCustomer(name string) {
+	fmt.Println("Creating customer ....")
+	var customerNew customer.Customer
+	customerNew.Create(name, 100)
+	customerList = append(customerList, customerNew)
 }
