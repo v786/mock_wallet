@@ -49,6 +49,7 @@ func runCommand(commandStr string) error {
 }
 
 func getCustomers() {
+	fmt.Println("Customer details : SlNo-Name-Balance-Limit")
 	for i := range customerList {
 		fmt.Println(i, customerList[i].GetDetails())
 	}

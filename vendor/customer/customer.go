@@ -19,12 +19,7 @@ func (customer *Customer) Create(name string, creditLimit int) error {
 	return nil
 }
 
-func (customer *Customer) GetDetails() error {
-	fmt.Println("Filed:", "Details")
-
-	fmt.Println("Name:", customer.Name)
-	fmt.Println("Balance:", customer.Balance)
-	fmt.Println("Limit:", customer.CreditLimit)
-
-	return nil
+func (customer *Customer) GetDetails() string {
+	details := fmt.Sprintf("Name: %s\tBalance: %s\tLimit: %s\n", customer.Name, customer.Balance, customer.CreditLimit)
+	return details
 }
