@@ -66,6 +66,8 @@ func runCommand(commandStr string) error {
 		getCustomers()
 	case "3":
 		getMerchants()
+	case "4":
+		updateBalance(arrCommandStr[1], arrCommandStr[2])
 	case "5":
 		fmt.Println(menu)
 	case "6":
@@ -100,6 +102,24 @@ func addCustomer(name string, amt int) {
 	customerList = append(customerList, customerNew)
 }
 
+func updateBalance(custIndex string, amount string) error {
+	amt, err := strconv.Atoi(amount)
+
+	if err != nil {
+		return err
+	}
+
+	index, err := strconv.Atoi(custIndex)
+
+	if err != nil {
+		return err
+	}
+
+	cust := customerList[index]
+
+	return cust.UpdateBalance(amt)
+}
+
 func addMerchant(name string, disc int) {
 	fmt.Println("Creating merchant ....")
 	var newMerchant merchant.Merchant
@@ -116,6 +136,7 @@ func test() {
 	addMerchant("mB1", 20)
 	addMerchant("mB2", 30)
 	addMerchant("mB3", 4)
+	updateBalance("1", "300")
 	getCustomers()
 	getMerchants()
 	os.Exit(0)
