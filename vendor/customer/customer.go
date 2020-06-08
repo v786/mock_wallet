@@ -20,6 +20,11 @@ func (customer *Customer) Create(name string, creditLimit int) error {
 }
 
 func (customer *Customer) GetDetails() string {
-	details := fmt.Sprintf("Name: %s\tBalance: %s\tLimit: %s\n", customer.Name, customer.Balance, customer.CreditLimit)
+	details := fmt.Sprintf("%s\t%d\t%d\n", customer.Name, customer.Balance, customer.CreditLimit)
 	return details
+}
+
+func (customer *Customer) UpdateBalance(amount int) error {
+	customer.Balance = amount
+	return nil
 }
