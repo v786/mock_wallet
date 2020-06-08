@@ -2,7 +2,7 @@ package merchant
 
 import "fmt"
 
-//Merchant : Users that accpet wallet balance in return of something
+//Merchant : Users that accept wallet balance in return of something
 type Merchant struct {
 	Name     string
 	Discount int

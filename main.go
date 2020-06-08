@@ -26,8 +26,8 @@ const (
 `
 )
 
-var customerList []customer.Customer
-var merchantList []merchant.Merchant
+var customerList []*customer.Customer
+var merchantList []*merchant.Merchant
 
 func main() {
 	reader := bufio.NewReader(os.Stdin)
@@ -99,10 +99,13 @@ func addCustomer(name string, amt int) {
 	fmt.Println("Creating customer ....")
 	var customerNew customer.Customer
 	customerNew.Create(name, amt)
-	customerList = append(customerList, customerNew)
+	customerList = append(customerList, &customerNew)
 }
 
 func updateBalance(custIndex string, amount string) error {
+
+	fmt.Println("Updating customer ....")
+
 	amt, err := strconv.Atoi(amount)
 
 	if err != nil {
@@ -124,7 +127,7 @@ func addMerchant(name string, disc int) {
 	fmt.Println("Creating merchant ....")
 	var newMerchant merchant.Merchant
 	newMerchant.Create(name, disc)
-	merchantList = append(merchantList, newMerchant)
+	merchantList = append(merchantList, &newMerchant)
 }
 
 func test() {
