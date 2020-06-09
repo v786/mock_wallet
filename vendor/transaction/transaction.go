@@ -3,6 +3,7 @@ package transaction
 import (
 	"customer"
 	"errors"
+	"fmt"
 	"merchant"
 )
 
@@ -17,8 +18,26 @@ type Transaction struct {
 
 func (transaction *Transaction) Create(cust *customer.Customer, merch *merchant.Merchant, amount int) error {
 
+	transaction.Customer = cust
+	transaction.Merchant = merch
+	transaction.Amount = amount
+	transaction.Discount = merch.Discount
+
+	var cost int
+	if amount > merch.Discount {
+		cost = amount - merch.Discount
+	} else {
+		cost = 0
+	}
+
+	transaction.Success = false
+
+	fmt.Println("Begin transaction....", cost, amount, cust.Balance)
+
 	if cust.Balance >= amount {
 		cust.Balance = cust.Balance - amount
+		merch.Balance = merch.Balance + cost
+		transaction.Success = true
 	} else {
 		return errors.New("balance not sufficient")
 	}

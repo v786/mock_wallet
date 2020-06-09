@@ -8,6 +8,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"transaction"
 )
 
 const (
@@ -28,6 +29,7 @@ const (
 
 var customerList []*customer.Customer
 var merchantList []*merchant.Merchant
+var transactionList []*transaction.Transaction
 
 func main() {
 	reader := bufio.NewReader(os.Stdin)
@@ -76,6 +78,8 @@ func runCommand(commandStr string) error {
 			return err
 		}
 		addMerchant(arrCommandStr[1], disc)
+	case "7":
+
 	}
 
 	return nil
@@ -130,6 +134,38 @@ func addMerchant(name string, disc int) {
 	merchantList = append(merchantList, &newMerchant)
 }
 
+func makeTransaction(custIndex string, merchIndex string, amt string) error {
+
+	index, err := strconv.Atoi(custIndex)
+	if err != nil {
+		return err
+	}
+
+	cust := customerList[index]
+
+	index, err = strconv.Atoi(merchIndex)
+	if err != nil {
+		return err
+	}
+
+	merchant := merchantList[index]
+
+	amount, err := strconv.Atoi(amt)
+	if err != nil {
+		return err
+	}
+
+	var t transaction.Transaction
+	transactionList = append(transactionList, &t)
+
+	err = t.Create(cust, merchant, amount)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func test() {
 	addCustomer("ABC", 100)
 	addCustomer("AB1", 200)
@@ -140,6 +176,7 @@ func test() {
 	addMerchant("mB2", 30)
 	addMerchant("mB3", 4)
 	updateBalance("1", "300")
+	fmt.Println(makeTransaction("1", "1", "50"))
 	getCustomers()
 	getMerchants()
 	os.Exit(0)
