@@ -99,6 +99,13 @@ func getMerchants() {
 	}
 }
 
+func getTransactions() {
+	fmt.Println("Transaction details : \nSlNo\tMerch\tCust\tAmount\tStatus")
+	for i := range transactionList {
+		fmt.Println(i+1, "\t", transactionList[i].GetDetails())
+	}
+}
+
 func addCustomer(name string, amt int) {
 	fmt.Println("Creating customer ....")
 	var customerNew customer.Customer
@@ -177,6 +184,7 @@ func test() {
 	addMerchant("mB3", 4)
 	updateBalance("1", "300")
 	fmt.Println(makeTransaction("1", "1", "50"))
+	getTransactions()
 	getCustomers()
 	getMerchants()
 	os.Exit(0)

@@ -44,3 +44,8 @@ func (transaction *Transaction) Create(cust *customer.Customer, merch *merchant.
 
 	return nil
 }
+
+func (transaction *Transaction) GetDetails() string {
+	details := fmt.Sprintf("%s\t%s\t%d\t%s\n", transaction.Merchant.Name, transaction.Customer.Name, transaction.Amount, transaction.Success)
+	return details
+}
