@@ -173,6 +173,37 @@ func makeTransaction(custIndex string, merchIndex string, amt string) error {
 	return nil
 }
 
+func getTransactionsByCustomer(cust customer.Customer) []transaction.Transaction {
+
+	var tranList []transaction.Transaction
+	var t transaction.Transaction
+
+	for i := range transactionList {
+		t = *transactionList[i]
+		if cust == *t.Customer {
+			tranList = append(tranList, t)
+		}
+	}
+
+	return tranList
+}
+
+func printTransList(tranList []transaction.Transaction) {
+	fmt.Println("Transaction details by Customer : \nSlNo\tMerch\tCust\tAmount\tStatus")
+	for i := range tranList {
+		fmt.Println(i+1, "\t", transactionList[i].GetDetails())
+	}
+}
+
+func getCustomerByIndex(index int) customer.Customer {
+
+	var cust customer.Customer
+
+	cust = *customerList[index]
+
+	return cust
+}
+
 func test() {
 	addCustomer("ABC", 100)
 	addCustomer("AB1", 200)
@@ -182,8 +213,15 @@ func test() {
 	addMerchant("mB1", 20)
 	addMerchant("mB2", 30)
 	addMerchant("mB3", 4)
+
 	updateBalance("1", "300")
+
 	fmt.Println(makeTransaction("1", "1", "50"))
+
+	c := getCustomerByIndex(1)
+	tl := getTransactionsByCustomer(c)
+
+	printTransList(tl)
 	getTransactions()
 	getCustomers()
 	getMerchants()
